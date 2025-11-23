@@ -1,0 +1,7 @@
+scenario,variant,t_star,clf__solver,clf__penalty,clf__class_weight,clf__C,clf__n_estimators,clf__min_samples_leaf,clf__max_features,clf__max_depth,clf__reg_lambda,clf__num_leaves,clf__min_child_samples,clf__learning_rate,clf__feature_fraction,clf__subsample,clf__colsample_bytree
+S0_baseline,logreg,0.13600320920857822,lbfgs,l2,,0.1668100537200059,,,,,,,,,,,
+S0_baseline,logreg_bal,0.7285076910078688,lbfgs,l2,balanced,0.1668100537200059,,,,,,,,,,,
+S0_baseline,logreg_smote,0.728442806397304,lbfgs,l2,,0.1668100537200059,,,,,,,,,,,
+S0_baseline,rf_bal,0.6845465634384312,,,balanced,,300.0,3.0,sqrt,10.0,,,,,,,
+S0_baseline,lgbm,0.15778380072948514,,,,,800.0,,,12.0,1.0,63.0,5.0,0.01,0.8,,
+S0_baseline,xgb,0.1637456864118576,,,,,500.0,,,5.0,0.01,,,0.05,,1.0,1.0
