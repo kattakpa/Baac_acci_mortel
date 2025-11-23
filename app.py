@@ -128,7 +128,7 @@ st.sidebar.markdown(f"*Dernière MAJ affichée :* {datetime.now():%d/%m/%Y}")
 # PAGE 1 – ACCUEIL
 # =========================
 if page == "🏠 Accueil":
-    st.title("Projet BAAC – Prédiction des accidents mortels")
+    st.title("Modélisation des accidents mortels (Open data BAAC)")
     st.write("")
     st.write("")
 
