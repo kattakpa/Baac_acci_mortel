@@ -10,7 +10,7 @@ import streamlit.components.v1 as components
 # CONFIG GÉNÉRALE
 # =========================
 st.set_page_config(
-    page_title="Projet BAAC – Prédiction des accidents mortels",
+    page_title="Modélisation des accidents mortels (Open data BAAC)",
     layout="wide"
 )
 
@@ -31,11 +31,11 @@ TABLE_S1_PATH = os.path.join(INPUT_DIR, "table_S1_in_memory.png")
 # Graphiques de métriques & courbes PR/ROC
 PERF_HTML = {
     "S0 – Barres (métriques @ t*)": os.path.join(INPUT_DIR, "BAR_S0_baseline.html"),
-    "S0 – Courbe PR (Precision–Recall)": os.path.join(INPUT_DIR, "PR_S0_baseline.html"),
-    "S0 – Courbe ROC": os.path.join(INPUT_DIR, "ROC_S0_baseline.html"),
+    "S0 – Courbe PR (Precision–Recall)": os.path.join(INPUT_DIR, "PR_S0_baseline.png"),
+    "S0 – Courbe ROC": os.path.join(INPUT_DIR, "ROC_S0_baseline.png"),
     "S1 – Barres (métriques @ t*)": os.path.join(INPUT_DIR, "BAR_S1_spatial.html"),
-    "S1 – Courbe PR (Precision–Recall)": os.path.join(INPUT_DIR, "PR_S1_spatial.html"),
-    "S1 – Courbe ROC": os.path.join(INPUT_DIR, "ROC_S1_spatial.html"),
+    "S1 – Courbe PR (Precision–Recall)": os.path.join(INPUT_DIR, "PR_S1_spatial.png"),
+    "S1 – Courbe ROC": os.path.join(INPUT_DIR, "ROC_S1_spatial.png"),
 }
 
 GAINS_HTML_PATH = os.path.join(INPUT_DIR, "mini_dashboard_gains.html")
@@ -141,7 +141,7 @@ if page == "🏠 Accueil":
             - Construction de variables explicatives :
               contexte de l'accident (type de route, luminosité, type de collision, …),
               profil des usagers (âge moyen / min/max, proportion d’hommes, nombre d’usagers, conducteurs, piétons, …),
-              caractéristiques géographiques (latitude, commune, département, …)
+              caractéristiques géographiques (latitude,longitude, commune, département, …)
             - Analyse exploratoire (EDA)  
             - Classification supervisée (plusieurs familles de modèles)  
             - Interprétabilité via **SHAP values**
@@ -275,7 +275,7 @@ elif page == "🗺️ Cartographie":
     )
 
     st.markdown("---")
-    st.subheader("4.2 Densité spatiale (hexbin)")
+    st.subheader("4.2 Densité géographique (hexbin)")
 
     st.markdown(
         """
