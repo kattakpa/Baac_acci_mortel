@@ -31,12 +31,16 @@ TABLE_S1_PATH = os.path.join(INPUT_DIR, "table_S1_in_memory.png")
 # Graphiques de métriques & courbes PR/ROC
 PERF_HTML = {
     "S0 – Barres (métriques @ t*)": os.path.join(INPUT_DIR, "BAR_S0_baseline.html"),
-    "S0 – Courbe PR (Precision–Recall)": os.path.join(INPUT_DIR, "PR_S0_baseline.png"),
-    "S0 – Courbe ROC": os.path.join(INPUT_DIR, "ROC_S0_baseline.png"),
     "S1 – Barres (métriques @ t*)": os.path.join(INPUT_DIR, "BAR_S1_spatial.html"),
-    "S1 – Courbe PR (Precision–Recall)": os.path.join(INPUT_DIR, "PR_S1_spatial.png"),
-    "S1 – Courbe ROC": os.path.join(INPUT_DIR, "ROC_S1_spatial.png"),
 }
+
+PERF_PNG = {
+    "S0 – Courbe PR (Precision–Recall)": os.path.join(INPUT_DIR, "PR_S0_baseline.png"),
+    "S0 – Courbe ROC":                   os.path.join(INPUT_DIR, "ROC_S0_baseline.png"),
+    "S1 – Courbe PR (Precision–Recall)": os.path.join(INPUT_DIR, "PR_S1_spatial.png"),
+    "S1 – Courbe ROC":                   os.path.join(INPUT_DIR, "ROC_S1_spatial.png"),
+}
+
 
 GAINS_HTML_PATH = os.path.join(INPUT_DIR, "mini_dashboard_gains.html")
 BEST_MODELS_HTML_PATH = os.path.join(INPUT_DIR, "best_models_report_in_memory.html")
@@ -387,7 +391,7 @@ elif page == "🤖 Modélisation & SHAP":
 
     st.markdown(
         """
-        Les graphiques ci-dessous présentent les **meilleurs modèles** de chaque scénario
+        Les graphiques ci-dessous présentent les **meilleurs modèles** de chaque scénario  
         (ici : LGBM pour S0_baseline et S1_géographique) :
 
         - **Graphique barres** : comparaison des métriques globales (AP, AUC, F1, Precision, Recall) au seuil `t*`,  
@@ -395,38 +399,47 @@ elif page == "🤖 Modélisation & SHAP":
         """
     )
 
-    # --- Sélecteur BARRES ---
+    # ========================================================
+    # 🔹 5.2.1 — BARRES (métriques globales)
+    # ========================================================
     st.subheader("Graphiques barres (métriques @ t*)")
+
     choix_barres = st.selectbox(
         "Sélectionner un scénario pour les métriques globales :",
-        ["S0 – Barres (métriques @ t*)", "S1 – Barres (métriques @ t*)"]
+        ["S0 – Barres (métriques @ t*)", "S1 – Barres (métriques @ t*)"],
+        key="barres_selector"
     )
 
     barres_path = PERF_HTML[choix_barres]
     show_html(barres_path, height=560, label_if_missing=os.path.basename(barres_path))
 
-    st.markdown("<br>", unsafe_allow_html=True)  # petit espace
+    st.markdown("<div style='margin-bottom:10px;'></div>", unsafe_allow_html=True)
 
-    # --- Sélecteur COURBES PR / ROC ---
+    # ========================================================
+    # 🔹 5.2.2 — COURBES PR / ROC (PNG)
+    # ========================================================
     st.subheader("Courbes PR / ROC")
+
     choix_courbes = st.selectbox(
         "Sélectionner une courbe PR / ROC :",
-        [
-            "S0 – Courbe PR (Precision–Recall)",
-            "S0 – Courbe ROC",
-            "S1 – Courbe PR (Precision–Recall)",
-            "S1 – Courbe ROC",
-        ]
+        list(PERF_PNG.keys()),
+        key="courbes_selector"
     )
 
-    courbe_path = PERF_HTML[choix_courbes]
-    show_html(courbe_path, height=560, label_if_missing=os.path.basename(courbe_path))
+    courbe_path = PERF_PNG[choix_courbes]
+
+    courbe_img = load_img(courbe_path)
+    if courbe_img is not None:
+        st.image(courbe_img, caption=choix_courbes, width="stretch")
+    else:
+        st.warning(f"Image non trouvée : `{courbe_path}`")
 
     st.markdown(
         """
         Ces courbes montrent que les modèles **LGBM** sont les plus performants dans les deux scénarios,
         avec un meilleur rappel des accidents mortels et une discrimination plus stable aux différents seuils.
-        """
+        """,
+        unsafe_allow_html=True
     )
 
 
